@@ -12,7 +12,6 @@
 
 * **Proyectos de Análisis de Datos** con historias y aprendizajes.
 * **Dashboards en Power BI** (KPIs, tendencias, comparativos).
-* **Casos de auditoría** con enfoque en **ISO 9001**.
 * Experimentos con **Python (pandas, seaborn)** y **SQL**.
 
 ---
