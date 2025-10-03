@@ -1,6 +1,7 @@
 # 🚀 Portafolio – Felipe De León
 
 > Analista de Datos | Power BI | Python | SQL | Tableau | AI
+
 > Mi portafolio público con proyectos, dashboards y casos reales. Construido para ser simple, rápido y fácil de mantener.
 
 [🌐 Ver sitio en línea](https://felipedeleon.github.io) · [📧 Contacto](mailto:felipedeleong@gmail.com) · [💼 LinkedIn](https://www.linkedin.com/in/felipe-deleon/)
