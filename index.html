@@ -1509,11 +1509,12 @@ body {
 }
 
 .skill-card .skill-icon {
-    font-size: 2.5rem;
+    width: 64px;
+    height: 64px;
     margin-bottom: calc(var(--spacing-unit) * 1.5);
-    color: var(--accent-color);
     transition: var(--transition-base);
     display: block;
+    object-fit: contain;
 }
 
 .skill-card:hover .skill-icon {
@@ -2058,14 +2059,14 @@ body {
 <script>
 // ======================= Data =======================
 const skillsData = [
-  { name: 'Excel', icon: '📊', filter: 'excel' },
-  { name: 'SQL', icon: '🗃️', filter: 'sql' },
-  { name: 'Python', icon: '🐍', filter: 'python' },
-  { name: 'Power BI', icon: '📈', filter: 'powerbi' },
-  { name: 'Tableau', icon: '📉', filter: 'tableau' },
-  { name: 'Azure', icon: '☁️', filter: 'azure' },
-  { name: 'AWS', icon: '🌐', filter: 'aws' },
-  { name: 'AI/ML', icon: '🤖', filter: 'ai' }
+    { name: 'Excel', icon: 'https://img.icons8.com/color/96/microsoft-excel-2019--v1.png', filter: 'excel' },
+    { name: 'SQL', icon: 'https://img.icons8.com/color/96/sql.png', filter: 'sql' },
+    { name: 'Python', icon: 'https://img.icons8.com/color/96/python--v1.png', filter: 'python' },
+    { name: 'Power BI', icon: 'https://img.icons8.com/color/96/power-bi.png', filter: 'powerbi' },
+    { name: 'Tableau', icon: 'https://img.icons8.com/color/96/tableau-software.png', filter: 'tableau' },
+    { name: 'Azure', icon: 'https://img.icons8.com/fluency/96/azure-1.png', filter: 'azure' },
+    { name: 'AWS', icon: 'https://img.icons8.com/color/96/amazon-web-services.png', filter: 'aws' },
+    { name: 'AI/ML', icon: 'https://img.icons8.com/color/96/artificial-intelligence.png', filter: 'ai' }
 ];
 
 const projectsData = [
@@ -2205,7 +2206,7 @@ function toast(msg, timeout=2500) {
     const card = document.createElement('div');
     card.className = 'skill-card';
     card.setAttribute('role', 'listitem');
-    card.innerHTML = `<span class="skill-icon" aria-hidden="true">${s.icon}</span><h5>${s.name}</h5>`;
+    card.innerHTML = `<img src="${s.icon}" alt="${s.name} icon" class="skill-icon" aria-hidden="true" /><h5>${s.name}</h5>`;
     frag.appendChild(card);
   });
   grid.appendChild(frag);
