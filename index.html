@@ -2273,10 +2273,11 @@ function toast(msg, timeout=2500) {
     const badges = (p.badges || []).map(b => `<span class="badge">${b}</span>`).join('');
     const features = (p.features || []).map(f => `<li>${f}</li>`).join('');
     const links = (p.links || []).map(l => {
-      const disabled = l.disabled ? `aria-disabled="true"` : '';
-      return `<a class="project-link" href="${l.url}" ${l.url === '#' ? 'onclick="return false;"' : ''} ${disabled} ${l.disabled ? 'tabindex="-1"' : ''}>
-                <span aria-hidden="true">${l.icon || '🔗'}</span>${l.text}
-              </a>`;
+        const disabled = l.disabled ? `aria-disabled="true"` : '';
+        const external = l.url !== '#' && !l.disabled ? 'target="_blank" rel="noopener noreferrer"' : '';
+        return `<a class="project-link" href="${l.url}" ${l.url === '#' ? 'onclick="return false;"' : ''} ${disabled} ${l.disabled ? 'tabindex="-1"' : ''} ${external}>
+                    <span aria-hidden="true">${l.icon || '🔗'}</span>${l.text}
+                </a>`;
     }).join('');
     
     return `
