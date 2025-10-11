@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<title>Felipe De León | Data Analyst Portfolio - MySQL, Python, Power BI Expert</title>
+<title>Felipe De León | Data Analyst Portfolio - SQL, Python, Power BI Expert</title>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
 <meta content="Data Analyst Portfolio - Felipe De León. Expert in SQL, Python, Power BI, and Tableau for data-driven decision making. 2.5+ years transforming data into actionable business insights." name="description"/>
@@ -2076,7 +2076,6 @@ const projectsData = [
     id: 1,
     name: 'Sales Data Analysis Dashboard',
     icon: '🛒',
-    tech: 'Python • Pandas • Matplotlib • Seaborn',
     badges: ['Python', 'Data Analysis', 'Visualization'],
     description: 'Comprehensive sales data analysis project processing 100K+ transactions to identify revenue trends, customer segments, and seasonality. Includes interactive visuals and automated reporting.',
     features: [
@@ -2098,7 +2097,6 @@ const projectsData = [
     id: 2,
     name: 'Customer Churn Prediction Model',
     icon: '🤖',
-    tech: 'Python • Scikit-learn • XGBoost • Pandas',
     badges: ['Machine Learning', 'Python', 'Predictive Analytics'],
     description: 'Binary classifier to predict customer churn with ~87% accuracy using feature engineering, model selection, and hyperparameter tuning. Includes explainability and evaluation reports.',
     features: [
@@ -2113,6 +2111,28 @@ const projectsData = [
     skills: ['python', 'sklearn', 'xgboost', 'pandas'],
     date: '2024-08',
     relevance: 9
+  },
+  {
+    id: 3,
+    name: 'Exploratory Data Analysis',
+    icon: '🧹',
+    badges: ['SQL'],
+    description: 'End-to-end SQL project analyzing global tech layoffs data. Implemented a complete ETL pipeline with data cleaning, standardization, and exploratory analysis to uncover trends in workforce reductions across companies, countries, and time periods using advanced SQL techniques including CTEs, window functions, and aggregations.',
+    features: [
+      'Data cleaning and preprocessing pipeline',
+      'Duplicate detection using ROW_NUMBER()',
+      'Data standardization and encoding correction',
+      'Null value handling with intelligent imputation',
+      'Temporal and geographic trend analysis',
+      'Company ranking and stage-based layoff insights',
+      'Comprehensive SQL documentation with comments'
+    ],
+    links: [
+      { text: 'Repository', icon: '🔗', url: 'https://github.com/FelipeDeLeon9/SQL/blob/main/EXPLORATORY%20DATA%20ANALYSIS.sql'}
+    ],
+    skills: ['SQL'],
+    date: '2025-08',
+    relevance: 2
   }
 ];
 
@@ -2226,19 +2246,11 @@ function toast(msg, timeout=2500) {
 
   if (!section || !toggleBtn || !grid) return;
 
-  function parseTech(str) {
-    if (!str) return [];
-    return str.split(/[•,|]/).map(s => s.trim()).filter(Boolean);
-  }
-
-  const techMap = new Map();
+  const badgesSet = new Set();
   projectsData.forEach(p => {
-    parseTech(p.tech).forEach(t => {
-      const key = t.toLowerCase();
-      if (!techMap.has(key)) techMap.set(key, t);
-    });
+    (p.badges || []).forEach(b => badgesSet.add(b));
   });
-  const techs = Array.from(techMap.values());
+  const techs = Array.from(badgesSet);
 
   techs.forEach(t => {
     const b = document.createElement('button');
@@ -2276,7 +2288,6 @@ function toast(msg, timeout=2500) {
             </div>
             <div class="project-details">
               <h3>${p.name}</h3>
-              <div class="project-tech">Skills: ${p.tech || ""}</div>
             </div>
           </div>
           <div class="project-badges">${badges}</div>
@@ -2297,15 +2308,14 @@ function toast(msg, timeout=2500) {
     if (query) {
       arr = arr.filter(p =>
         p.name.toLowerCase().includes(query) ||
-        (p.description || '').toLowerCase().includes(query) ||
-        (p.tech || '').toLowerCase().includes(query)
+        (p.description || '').toLowerCase().includes(query)
       );
     }
     
     if (active.length) {
       arr = arr.filter(p => {
-        const tokens = parseTech(p.tech).map(t => t.toLowerCase());
-        return tokens.some(t => active.includes(t));
+        const projectBadges = (p.badges || []).map(b => b.toLowerCase());
+        return projectBadges.some(b => active.includes(b));
       });
     }
     
