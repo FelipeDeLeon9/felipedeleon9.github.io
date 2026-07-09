@@ -124,6 +124,34 @@ document.addEventListener('DOMContentLoaded', async function() {
     setStatus('Rendering...');
     for (const uuid of uuids) template = template.split(uuid).join(blobUrls[uuid]);
 
+    // Fix: some image references (tech-stack icons and company logos) are
+    // hard-coded as literal URLs/paths inside the embedded JS instead of
+    // being swapped for bundle UUIDs, so the substitution loop above never
+    // touches them and the images 404/fail at runtime (see [bundle] error).
+    // Map each literal string straight to its already-bundled asset.
+    const literalAssetMap = {
+      'https://cdn.simpleicons.org/claude/D97757': 'afedd6e0-7348-43c8-80bf-e0cbbd9135e4',
+      'https://img.icons8.com/color/96/amazon-web-services.png': 'dfc810d1-fa48-4cd3-86fc-6dc2d091290c',
+      'https://img.icons8.com/color/96/artificial-intelligence.png': 'a94b7e0b-f310-4558-80eb-16ef89d1dc86',
+      'https://img.icons8.com/color/96/microsoft-excel-2019--v1.png': '85d01ffc-3c81-41ac-aa12-b4ff42eeb5f3',
+      'https://img.icons8.com/color/96/power-bi.png': 'a1e847cb-fbaf-4aab-8c07-118b4ededeba',
+      'https://img.icons8.com/color/96/python--v1.png': '81e33250-9766-4422-a438-d1abc43ef712',
+      'https://img.icons8.com/color/96/sap.png': 'ca9b8673-9f01-4418-a65d-92e25fe82f22',
+      'https://img.icons8.com/color/96/source-code.png': '93e34103-df2f-4634-9954-c011f6a269e9',
+      'https://img.icons8.com/color/96/sql.png': 'aeb61448-b5bc-4586-bebe-0486d9f6f265',
+      'https://img.icons8.com/color/96/tableau-software.png': 'db15148f-9e07-455e-b6c8-57999db8a77a',
+      'https://img.icons8.com/fluency/96/azure-1.png': '103d72b1-122a-461a-8029-cec3b4368ada',
+      'https://www.vectorlogo.zone/logos/snowflake/snowflake-icon.svg': '96752826-4159-414f-bf1e-529439e0d737',
+      'images/acggplogo.png': 'ee859186-9fa6-4f99-bb6a-6242f6ee8119',
+      'images/baudelairelogo.png': '8cc60873-7345-4f5e-a87b-479e9064fde1',
+      'images/skill-alteryx.png': '46d8c409-0a02-48aa-bac3-8b21983c9f26',
+      'images/stanleyblackdecker.png': 'd6857c62-624d-4a7e-a946-aeafaaab4ec0',
+      'images/yeapdatalogo.png': '1dd3b4f9-3b5b-4e20-87aa-23233f7fcfbd'
+    };
+    for (const [literal, uid] of Object.entries(literalAssetMap)) {
+      if (blobUrls[uid]) template = template.split(literal).join(blobUrls[uid]);
+    }
+
     // Strip integrity + crossorigin — blob URLs from a file:// document inherit
     // a null origin, so crossorigin forces a CORS fetch that SRI then rejects.
     // The manifest bytes are ours; SRI protects against CDN compromise, not this.
